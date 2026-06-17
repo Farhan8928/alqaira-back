@@ -10,7 +10,17 @@ import { runPagedQuery, escapeRegex } from "../../utils/repositoryHelpers.js";
 const POPULATE = [{ path: "customer", select: "name email" }];
 
 const orderRepository = {
-  findMany({ search, status, paymentStatus, paymentMethod, startDate, endDate, customer, page, limit }) {
+  findMany({
+    search,
+    status,
+    paymentStatus,
+    paymentMethod,
+    startDate,
+    endDate,
+    customer,
+    page,
+    limit,
+  }) {
     const filter = {};
     if (status) filter.status = status;
     if (paymentStatus) filter.paymentStatus = paymentStatus;
@@ -23,7 +33,12 @@ const orderRepository = {
     }
     if (search && search.trim()) {
       const rx = new RegExp(escapeRegex(search.trim()), "i");
-      filter.$or = [{ orderNumber: rx }, { "contact.name": rx }, { "contact.email": rx }, { "contact.phone": rx }];
+      filter.$or = [
+        { orderNumber: rx },
+        { "contact.name": rx },
+        { "contact.email": rx },
+        { "contact.phone": rx },
+      ];
     }
     return runPagedQuery({
       model: OrderModel,

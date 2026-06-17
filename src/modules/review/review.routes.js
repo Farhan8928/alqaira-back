@@ -13,7 +13,11 @@ import {
 
 /** Storefront review routes — mounted at /api/reviews */
 const reviewRouter = Router();
-reviewRouter.get("/product/:productId", validateRequest(reviewProductSchema), reviewController.listForProduct);
+reviewRouter.get(
+  "/product/:productId",
+  validateRequest(reviewProductSchema),
+  reviewController.listForProduct,
+);
 reviewRouter.post(
   "/product/:productId",
   authenticateCustomer,
@@ -25,7 +29,11 @@ reviewRouter.post(
 const reviewAdminRouter = Router();
 reviewAdminRouter.use(authenticate, authorizeRoles("admin", "manager"));
 reviewAdminRouter.get("/", validateRequest(reviewListSchema), reviewController.list);
-reviewAdminRouter.patch("/:id/approval", validateRequest(reviewApproveSchema), reviewController.setApproval);
+reviewAdminRouter.patch(
+  "/:id/approval",
+  validateRequest(reviewApproveSchema),
+  reviewController.setApproval,
+);
 reviewAdminRouter.delete("/:id", validateRequest(reviewIdSchema), reviewController.remove);
 
 export { reviewRouter, reviewAdminRouter };

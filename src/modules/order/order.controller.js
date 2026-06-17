@@ -49,6 +49,15 @@ const updateStatus = asyncHandler(async (req, res) => {
   return sendSuccess(res, { message: "Order updated", data: toOrderDto(order) });
 });
 
-const orderController = { create, verifyPayment, myOrders, getMine, track, list, get, updateStatus };
+const orderController = {
+  create,
+  verifyPayment,
+  myOrders,
+  getMine,
+  track,
+  list,
+  get,
+  updateStatus,
+};
 
 export { orderController };

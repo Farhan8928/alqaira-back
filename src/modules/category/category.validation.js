@@ -1,6 +1,10 @@
 import { z } from "zod";
 import { searchSchema, booleanQuerySchema } from "../../utils/validationPrimitives.js";
-import { makeSchema, idParamSchema, buildListQuery } from "../../utils/resourceValidationHelpers.js";
+import {
+  makeSchema,
+  idParamSchema,
+  buildListQuery,
+} from "../../utils/resourceValidationHelpers.js";
 
 const SECTIONS = ["men", "women", "kids"];
 const slugSchema = z

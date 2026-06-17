@@ -48,7 +48,11 @@ const orderService = {
           variantId: item.variantId,
           quantity: item.quantity,
         });
-        reserved.push({ productId: item.productId, variantId: item.variantId, quantity: item.quantity });
+        reserved.push({
+          productId: item.productId,
+          variantId: item.variantId,
+          quantity: item.quantity,
+        });
         lineItems.push(snapshot);
       }
     } catch (err) {
@@ -115,7 +119,13 @@ const orderService = {
       return {
         order,
         payment: isOnline
-          ? { provider: "razorpay", key: paymentService.publicKey(), orderId: razorpay.orderId, amount: Math.round(total * 100), currency: "INR" }
+          ? {
+              provider: "razorpay",
+              key: paymentService.publicKey(),
+              orderId: razorpay.orderId,
+              amount: Math.round(total * 100),
+              currency: "INR",
+            }
           : null,
       };
     } catch (err) {
@@ -137,7 +147,10 @@ const orderService = {
     });
     if (!valid) {
       order.paymentStatus = "failed";
-      order.statusHistory.push({ status: order.status, note: "Payment signature verification failed" });
+      order.statusHistory.push({
+        status: order.status,
+        note: "Payment signature verification failed",
+      });
       await order.save();
       throw new AppError("Payment verification failed", 400);
     }
@@ -187,7 +200,11 @@ const orderService = {
         order.items.map((i) =>
           i.product && i.variantId
             ? productService
-                .restoreStock({ productId: i.product, variantId: i.variantId, quantity: i.quantity })
+                .restoreStock({
+                  productId: i.product,
+                  variantId: i.variantId,
+                  quantity: i.quantity,
+                })
                 .catch(() => {})
             : Promise.resolve(),
         ),

@@ -60,11 +60,16 @@ const couponService = {
       throw new AppError("This coupon has reached its usage limit", 400);
     }
     if (subtotal < (coupon.minOrderValue || 0)) {
-      throw new AppError(`Add ₹${(coupon.minOrderValue - subtotal).toFixed(0)} more to use this coupon`, 400);
+      throw new AppError(
+        `Add ₹${(coupon.minOrderValue - subtotal).toFixed(0)} more to use this coupon`,
+        400,
+      );
     }
 
     let discount =
-      coupon.type === "percent" ? (subtotal * coupon.value) / 100 : Math.min(coupon.value, subtotal);
+      coupon.type === "percent"
+        ? (subtotal * coupon.value) / 100
+        : Math.min(coupon.value, subtotal);
     if (coupon.type === "percent" && coupon.maxDiscount) {
       discount = Math.min(discount, coupon.maxDiscount);
     }

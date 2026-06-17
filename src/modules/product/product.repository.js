@@ -15,7 +15,17 @@ const SORTS = {
   rating: { rating: -1 },
 };
 
-function buildFilter({ search, section, category, minPrice, maxPrice, isFeatured, isNewArrival, isActive, tag }) {
+function buildFilter({
+  search,
+  section,
+  category,
+  minPrice,
+  maxPrice,
+  isFeatured,
+  isNewArrival,
+  isActive,
+  tag,
+}) {
   const filter = {};
   if (section) filter.section = section;
   if (category) filter.category = category;
@@ -39,14 +49,26 @@ const productRepository = {
   findMany(query) {
     const filter = buildFilter(query);
     const sort = SORTS[query.sort] || SORTS.newest;
-    return runPagedQuery({ model: ProductModel, filter, sort, page: query.page, limit: query.limit });
+    return runPagedQuery({
+      model: ProductModel,
+      filter,
+      sort,
+      page: query.page,
+      limit: query.limit,
+    });
   },
 
   findFeatured: (limit = 8) =>
-    ProductModel.find({ isActive: true, isFeatured: true }).sort({ createdAt: -1 }).limit(limit).lean(),
+    ProductModel.find({ isActive: true, isFeatured: true })
+      .sort({ createdAt: -1 })
+      .limit(limit)
+      .lean(),
 
   findNewArrivals: (limit = 8) =>
-    ProductModel.find({ isActive: true, isNewArrival: true }).sort({ createdAt: -1 }).limit(limit).lean(),
+    ProductModel.find({ isActive: true, isNewArrival: true })
+      .sort({ createdAt: -1 })
+      .limit(limit)
+      .lean(),
 
   findRelated: (product, limit = 4) =>
     ProductModel.find({
@@ -65,7 +87,8 @@ const productRepository = {
   countByCategory: (categoryId) => ProductModel.countDocuments({ category: categoryId }),
 
   create: (data) => ProductModel.create(data),
-  updateById: (id, patch) => ProductModel.findByIdAndUpdate(id, { $set: patch }, { new: true }).lean(),
+  updateById: (id, patch) =>
+    ProductModel.findByIdAndUpdate(id, { $set: patch }, { new: true }).lean(),
   deleteById: (id) => ProductModel.findByIdAndDelete(id).lean(),
 
   /**
@@ -75,7 +98,9 @@ const productRepository = {
   adjustVariantStock(productId, variantId, delta) {
     // On consume (delta < 0) require enough stock via $elemMatch; on restore just match the id.
     const variantMatch =
-      delta < 0 ? { $elemMatch: { _id: variantId, stock: { $gte: -delta } } } : { $elemMatch: { _id: variantId } };
+      delta < 0
+        ? { $elemMatch: { _id: variantId, stock: { $gte: -delta } } }
+        : { $elemMatch: { _id: variantId } };
     return ProductModel.findOneAndUpdate(
       { _id: productId, variants: variantMatch },
       { $inc: { "variants.$.stock": delta } },
@@ -96,7 +121,15 @@ const productRepository = {
       { $match: { totalStock: { $lte: threshold } } },
       { $sort: { totalStock: 1 } },
       { $limit: limit },
-      { $project: { name: 1, slug: 1, totalStock: 1, categoryName: 1, image: { $arrayElemAt: ["$images", 0] } } },
+      {
+        $project: {
+          name: 1,
+          slug: 1,
+          totalStock: 1,
+          categoryName: 1,
+          image: { $arrayElemAt: ["$images", 0] },
+        },
+      },
     ]);
   },
 };

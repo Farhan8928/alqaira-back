@@ -25,7 +25,11 @@ const getBySlug = asyncHandler(async (req, res) => {
 
 const create = asyncHandler(async (req, res) => {
   const cat = await categoryService.create(req.validated.body);
-  return sendSuccess(res, { statusCode: 201, message: "Category created", data: toCategoryDto(cat) });
+  return sendSuccess(res, {
+    statusCode: 201,
+    message: "Category created",
+    data: toCategoryDto(cat),
+  });
 });
 
 const update = asyncHandler(async (req, res) => {

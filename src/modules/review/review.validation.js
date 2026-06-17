@@ -1,6 +1,10 @@
 import { z } from "zod";
 import { objectIdSchema, booleanQuerySchema } from "../../utils/validationPrimitives.js";
-import { makeSchema, idParamSchema, buildListQuery } from "../../utils/resourceValidationHelpers.js";
+import {
+  makeSchema,
+  idParamSchema,
+  buildListQuery,
+} from "../../utils/resourceValidationHelpers.js";
 
 const reviewCreateSchema = makeSchema({
   body: z.object({
@@ -19,4 +23,10 @@ const reviewApproveSchema = makeSchema({
   params: idParamSchema,
 });
 
-export { reviewCreateSchema, reviewProductSchema, reviewListSchema, reviewIdSchema, reviewApproveSchema };
+export {
+  reviewCreateSchema,
+  reviewProductSchema,
+  reviewListSchema,
+  reviewIdSchema,
+  reviewApproveSchema,
+};

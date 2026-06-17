@@ -24,7 +24,12 @@ const ProductSchema = new mongoose.Schema(
     description: { type: String, trim: true },
     shortDescription: { type: String, trim: true },
 
-    category: { type: mongoose.Schema.Types.ObjectId, ref: "Category", required: true, index: true },
+    category: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Category",
+      required: true,
+      index: true,
+    },
     categoryName: { type: String, trim: true },
     section: { type: String, enum: ["men", "women", "kids"], required: true, index: true },
 

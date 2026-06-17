@@ -22,13 +22,22 @@ orderRouter.post("/verify-payment", orderController.verifyPayment);
 orderRouter.get("/track/:orderNumber", validateRequest(orderTrackSchema), orderController.track);
 // Logged-in customer order history
 orderRouter.get("/mine", authenticateCustomer, orderController.myOrders);
-orderRouter.get("/mine/:id", authenticateCustomer, validateRequest(orderIdSchema), orderController.getMine);
+orderRouter.get(
+  "/mine/:id",
+  authenticateCustomer,
+  validateRequest(orderIdSchema),
+  orderController.getMine,
+);
 
 /** Admin order management — mounted at /api/admin/orders */
 const orderAdminRouter = Router();
 orderAdminRouter.use(authenticate, authorizeRoles("admin", "manager", "staff"));
 orderAdminRouter.get("/", validateRequest(orderListSchema), orderController.list);
 orderAdminRouter.get("/:id", validateRequest(orderIdSchema), orderController.get);
-orderAdminRouter.patch("/:id/status", validateRequest(orderStatusSchema), orderController.updateStatus);
+orderAdminRouter.patch(
+  "/:id/status",
+  validateRequest(orderStatusSchema),
+  orderController.updateStatus,
+);
 
 export { orderRouter, orderAdminRouter };

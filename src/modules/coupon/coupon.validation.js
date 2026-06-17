@@ -1,6 +1,14 @@
 import { z } from "zod";
-import { searchSchema, booleanQuerySchema, flexDateSchema } from "../../utils/validationPrimitives.js";
-import { makeSchema, idParamSchema, buildListQuery } from "../../utils/resourceValidationHelpers.js";
+import {
+  searchSchema,
+  booleanQuerySchema,
+  flexDateSchema,
+} from "../../utils/validationPrimitives.js";
+import {
+  makeSchema,
+  idParamSchema,
+  buildListQuery,
+} from "../../utils/resourceValidationHelpers.js";
 
 const couponBody = z.object({
   code: z.string().trim().min(2, "Code is required").toUpperCase(),

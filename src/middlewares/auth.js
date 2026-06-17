@@ -34,13 +34,16 @@ async function authenticate(req, _res, next) {
 
     const user = await userRepository.findById(payload.sub);
     if (!user) return next(new AppError("User not found", 401, { code: "UNAUTHORIZED" }));
-    if (!user.isActive) return next(new AppError("Account is disabled", 403, { code: "FORBIDDEN" }));
+    if (!user.isActive)
+      return next(new AppError("Account is disabled", 403, { code: "FORBIDDEN" }));
 
     req.user = { id: String(user._id), role: user.role, email: user.email, name: user.name };
     next();
   } catch (err) {
     if (err.name === "TokenExpiredError") {
-      return next(new AppError("Token expired, please login again", 401, { code: "TOKEN_EXPIRED" }));
+      return next(
+        new AppError("Token expired, please login again", 401, { code: "TOKEN_EXPIRED" }),
+      );
     }
     next(new AppError("Invalid token", 401, { code: "UNAUTHORIZED" }));
   }
@@ -49,7 +52,8 @@ async function authenticate(req, _res, next) {
 async function authenticateCustomer(req, _res, next) {
   try {
     const token = extractToken(req);
-    if (!token) return next(new AppError("Please sign in to continue", 401, { code: "UNAUTHORIZED" }));
+    if (!token)
+      return next(new AppError("Please sign in to continue", 401, { code: "UNAUTHORIZED" }));
 
     const payload = jwt.verify(token, env.JWT_ACCESS_SECRET);
     if (payload.type !== "customer") {
@@ -66,7 +70,9 @@ async function authenticateCustomer(req, _res, next) {
     next();
   } catch (err) {
     if (err.name === "TokenExpiredError") {
-      return next(new AppError("Session expired, please sign in again", 401, { code: "TOKEN_EXPIRED" }));
+      return next(
+        new AppError("Session expired, please sign in again", 401, { code: "TOKEN_EXPIRED" }),
+      );
     }
     next(new AppError("Invalid token", 401, { code: "UNAUTHORIZED" }));
   }

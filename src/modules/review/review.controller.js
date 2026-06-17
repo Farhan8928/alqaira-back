@@ -14,7 +14,11 @@ const create = asyncHandler(async (req, res) => {
     req.customer,
     req.validated.body,
   );
-  return sendSuccess(res, { statusCode: 201, message: "Thanks for your review", data: toReviewDto(review) });
+  return sendSuccess(res, {
+    statusCode: 201,
+    message: "Thanks for your review",
+    data: toReviewDto(review),
+  });
 });
 
 const list = asyncHandler(async (req, res) => {
@@ -23,7 +27,10 @@ const list = asyncHandler(async (req, res) => {
 });
 
 const setApproval = asyncHandler(async (req, res) => {
-  const review = await reviewService.setApproval(req.validated.params.id, req.validated.body.isApproved);
+  const review = await reviewService.setApproval(
+    req.validated.params.id,
+    req.validated.body.isApproved,
+  );
   return sendSuccess(res, { message: "Review updated", data: toReviewDto(review) });
 });
 

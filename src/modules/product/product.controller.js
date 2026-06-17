@@ -37,7 +37,11 @@ const get = asyncHandler(async (req, res) => {
 
 const create = asyncHandler(async (req, res) => {
   const product = await productService.create(req.validated.body);
-  return sendSuccess(res, { statusCode: 201, message: "Product created", data: toProductDto(product) });
+  return sendSuccess(res, {
+    statusCode: 201,
+    message: "Product created",
+    data: toProductDto(product),
+  });
 });
 
 const update = asyncHandler(async (req, res) => {

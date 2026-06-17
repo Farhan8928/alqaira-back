@@ -19,13 +19,21 @@ import {
 /** Storefront account routes — mounted at /api/account */
 const accountRouter = Router();
 
-accountRouter.post("/register", validateRequest(customerRegisterSchema), customerController.register);
+accountRouter.post(
+  "/register",
+  validateRequest(customerRegisterSchema),
+  customerController.register,
+);
 accountRouter.post("/login", validateRequest(customerLoginSchema), customerController.login);
 
 accountRouter.use(authenticateCustomer);
 accountRouter.get("/me", validateRequest(customerMeSchema), customerController.getMe);
 accountRouter.patch("/me", validateRequest(customerUpdateSchema), customerController.updateProfile);
-accountRouter.post("/addresses", validateRequest(addressCreateSchema), customerController.addAddress);
+accountRouter.post(
+  "/addresses",
+  validateRequest(addressCreateSchema),
+  customerController.addAddress,
+);
 accountRouter.patch(
   "/addresses/:id",
   validateRequest(addressUpdateSchema),

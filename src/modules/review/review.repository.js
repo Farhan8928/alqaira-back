@@ -19,11 +19,13 @@ const reviewRepository = {
     });
   },
 
-  findOne: (productId, customerId) => ReviewModel.findOne({ product: productId, customer: customerId }).lean(),
+  findOne: (productId, customerId) =>
+    ReviewModel.findOne({ product: productId, customer: customerId }).lean(),
   findById: (id) => ReviewModel.findById(id).lean(),
 
   create: (data) => ReviewModel.create(data),
-  updateById: (id, patch) => ReviewModel.findByIdAndUpdate(id, { $set: patch }, { new: true }).lean(),
+  updateById: (id, patch) =>
+    ReviewModel.findByIdAndUpdate(id, { $set: patch }, { new: true }).lean(),
   deleteById: (id) => ReviewModel.findByIdAndDelete(id).lean(),
 
   /** Aggregate approved reviews for a product → { avg, count }. */

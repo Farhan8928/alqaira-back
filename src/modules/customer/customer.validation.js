@@ -1,6 +1,10 @@
 import { z } from "zod";
 import { emailSchema, searchSchema } from "../../utils/validationPrimitives.js";
-import { makeSchema, idParamSchema, buildListQuery } from "../../utils/resourceValidationHelpers.js";
+import {
+  makeSchema,
+  idParamSchema,
+  buildListQuery,
+} from "../../utils/resourceValidationHelpers.js";
 
 const passwordSchema = z.string().min(6, "Password must be at least 6 characters");
 
@@ -45,7 +49,10 @@ const customerUpdateSchema = makeSchema({
 });
 
 const addressCreateSchema = makeSchema({ body: addressBodySchema });
-const addressUpdateSchema = makeSchema({ body: addressBodySchema.partial(), params: idParamSchema });
+const addressUpdateSchema = makeSchema({
+  body: addressBodySchema.partial(),
+  params: idParamSchema,
+});
 const addressDeleteSchema = makeSchema({ params: idParamSchema });
 
 // Admin

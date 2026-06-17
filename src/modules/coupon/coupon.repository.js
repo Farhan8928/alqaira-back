@@ -16,7 +16,8 @@ const couponRepository = {
   findById: (id) => CouponModel.findById(id).lean(),
 
   create: (data) => CouponModel.create(data),
-  updateById: (id, patch) => CouponModel.findByIdAndUpdate(id, { $set: patch }, { new: true }).lean(),
+  updateById: (id, patch) =>
+    CouponModel.findByIdAndUpdate(id, { $set: patch }, { new: true }).lean(),
   deleteById: (id) => CouponModel.findByIdAndDelete(id).lean(),
 
   incrementUsage: (id) => CouponModel.findByIdAndUpdate(id, { $inc: { usedCount: 1 } }).lean(),

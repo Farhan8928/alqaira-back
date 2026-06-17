@@ -10,7 +10,11 @@ const list = asyncHandler(async (req, res) => {
 
 const create = asyncHandler(async (req, res) => {
   const coupon = await couponService.create(req.validated.body);
-  return sendSuccess(res, { statusCode: 201, message: "Coupon created", data: toCouponDto(coupon) });
+  return sendSuccess(res, {
+    statusCode: 201,
+    message: "Coupon created",
+    data: toCouponDto(coupon),
+  });
 });
 
 const update = asyncHandler(async (req, res) => {

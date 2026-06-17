@@ -16,17 +16,78 @@ import { SettingsModel } from "../src/modules/settings/settings.model.js";
 
 const CATEGORIES = [
   // Men — jubba & kurta styles
-  { name: "Saudi Style Jubba", slug: "saudi-style-jubba", section: "men", isFeatured: true, displayOrder: 1, description: "Classic Saudi thobe silhouette with a crisp collar and clean placket." },
-  { name: "Omani Style Jubba", slug: "omani-style-jubba", section: "men", isFeatured: true, displayOrder: 2, description: "Collarless Omani dishdasha with the signature tassel (furakha)." },
-  { name: "Emirati Style Jubba", slug: "emirati-style-jubba", section: "men", isFeatured: true, displayOrder: 3, description: "Refined Emirati kandura with a front pocket and minimal detailing." },
-  { name: "Moroccan / Kaftan Style Jubba", slug: "moroccan-kaftan-jubba", section: "men", isFeatured: true, displayOrder: 4, description: "Flowing Moroccan kaftan cut with ornate trims." },
-  { name: "Designer / Modern Style Jubba", slug: "designer-modern-jubba", section: "men", isFeatured: true, displayOrder: 5, description: "Contemporary tailored jubbas for the modern gentleman." },
-  { name: "Straight Cut Kurta Pajama", slug: "straight-cut-kurta-pajama", section: "men", displayOrder: 6, description: "Timeless straight-cut kurta with matching pajama." },
-  { name: "Pathani Kurta Pajama", slug: "pathani-kurta-pajama", section: "men", displayOrder: 7, description: "Rugged Pathani suit with a structured collar and side pockets." },
+  {
+    name: "Saudi Style Jubba",
+    slug: "saudi-style-jubba",
+    section: "men",
+    isFeatured: true,
+    displayOrder: 1,
+    description: "Classic Saudi thobe silhouette with a crisp collar and clean placket.",
+  },
+  {
+    name: "Omani Style Jubba",
+    slug: "omani-style-jubba",
+    section: "men",
+    isFeatured: true,
+    displayOrder: 2,
+    description: "Collarless Omani dishdasha with the signature tassel (furakha).",
+  },
+  {
+    name: "Emirati Style Jubba",
+    slug: "emirati-style-jubba",
+    section: "men",
+    isFeatured: true,
+    displayOrder: 3,
+    description: "Refined Emirati kandura with a front pocket and minimal detailing.",
+  },
+  {
+    name: "Moroccan / Kaftan Style Jubba",
+    slug: "moroccan-kaftan-jubba",
+    section: "men",
+    isFeatured: true,
+    displayOrder: 4,
+    description: "Flowing Moroccan kaftan cut with ornate trims.",
+  },
+  {
+    name: "Designer / Modern Style Jubba",
+    slug: "designer-modern-jubba",
+    section: "men",
+    isFeatured: true,
+    displayOrder: 5,
+    description: "Contemporary tailored jubbas for the modern gentleman.",
+  },
+  {
+    name: "Straight Cut Kurta Pajama",
+    slug: "straight-cut-kurta-pajama",
+    section: "men",
+    displayOrder: 6,
+    description: "Timeless straight-cut kurta with matching pajama.",
+  },
+  {
+    name: "Pathani Kurta Pajama",
+    slug: "pathani-kurta-pajama",
+    section: "men",
+    displayOrder: 7,
+    description: "Rugged Pathani suit with a structured collar and side pockets.",
+  },
   // Women
-  { name: "Burkha", slug: "burkha", section: "women", isFeatured: true, displayOrder: 1, description: "Elegant, breathable burkhas and abayas crafted from premium fabric." },
+  {
+    name: "Burkha",
+    slug: "burkha",
+    section: "women",
+    isFeatured: true,
+    displayOrder: 1,
+    description: "Elegant, breathable burkhas and abayas crafted from premium fabric.",
+  },
   // Kids
-  { name: "Kids Kurta & Jubba", slug: "kids-kurta-jubba", section: "kids", isFeatured: true, displayOrder: 1, description: "Festive kurtas and jubbas for little ones." },
+  {
+    name: "Kids Kurta & Jubba",
+    slug: "kids-kurta-jubba",
+    section: "kids",
+    isFeatured: true,
+    displayOrder: 1,
+    description: "Festive kurtas and jubbas for little ones.",
+  },
 ];
 
 const SIZES_MEN = ["S", "M", "L", "XL", "XXL"];
@@ -99,10 +160,14 @@ async function run() {
   let created = 0;
   for (const [slug, names] of Object.entries(PRODUCTS_BY_CATEGORY)) {
     const cat = catBySlug[slug];
-    const sizes = cat.section === "women" ? SIZES_WOMEN : cat.section === "kids" ? SIZES_KIDS : SIZES_MEN;
+    const sizes =
+      cat.section === "women" ? SIZES_WOMEN : cat.section === "kids" ? SIZES_KIDS : SIZES_MEN;
     for (let i = 0; i < names.length; i++) {
       const name = names[i];
-      const productSlug = name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
+      const productSlug = name
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/(^-|-$)/g, "");
       if (await ProductModel.exists({ slug: productSlug })) {
         console.log(`[SKIP] Product exists: ${name}`);
         continue;
@@ -119,7 +184,11 @@ async function run() {
         section: cat.section,
         price,
         compareAtPrice,
-        images: [img(cat.section, productSlug, 1), img(cat.section, productSlug, 2), img(cat.section, productSlug, 3)],
+        images: [
+          img(cat.section, productSlug, 1),
+          img(cat.section, productSlug, 2),
+          img(cat.section, productSlug, 3),
+        ],
         variants: makeVariants(sizes, 8 + i),
         fabric: FABRICS[i % FABRICS.length],
         color: COLORS[i % COLORS.length],

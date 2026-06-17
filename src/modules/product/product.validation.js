@@ -4,7 +4,11 @@ import {
   booleanQuerySchema,
   objectIdSchema,
 } from "../../utils/validationPrimitives.js";
-import { makeSchema, idParamSchema, buildListQuery } from "../../utils/resourceValidationHelpers.js";
+import {
+  makeSchema,
+  idParamSchema,
+  buildListQuery,
+} from "../../utils/resourceValidationHelpers.js";
 
 const SECTIONS = ["men", "women", "kids"];
 const SORTS = ["newest", "oldest", "price-asc", "price-desc", "popular", "rating"];
@@ -63,7 +67,10 @@ const productListSchema = makeSchema({
   }),
 });
 const productCreateSchema = makeSchema({ body: productCreateBody });
-const productUpdateSchema = makeSchema({ body: productCreateBody.partial(), params: idParamSchema });
+const productUpdateSchema = makeSchema({
+  body: productCreateBody.partial(),
+  params: idParamSchema,
+});
 const productIdSchema = makeSchema({ params: idParamSchema });
 const productSlugSchema = makeSchema({ params: z.object({ slug: slugSchema }) });
 

@@ -45,7 +45,11 @@ const productService = {
       throw new AppError("A product with this slug already exists", 409);
     }
     const cat = await resolveCategory(body.category);
-    return productRepository.create({ ...body, categoryName: cat.name, section: body.section || cat.section });
+    return productRepository.create({
+      ...body,
+      categoryName: cat.name,
+      section: body.section || cat.section,
+    });
   },
 
   async update(id, body) {
@@ -77,11 +81,15 @@ const productService = {
    */
   async reserveStock({ productId, variantId, quantity }) {
     const product = await productRepository.findById(productId);
-    if (!product || !product.isActive) throw new AppError("A product in your cart is no longer available", 400);
+    if (!product || !product.isActive)
+      throw new AppError("A product in your cart is no longer available", 400);
     const variant = (product.variants || []).find((v) => String(v._id) === String(variantId));
     if (!variant) throw new AppError(`Selected size for "${product.name}" is unavailable`, 400);
     if (variant.stock < quantity) {
-      throw new AppError(`Only ${variant.stock} left in size ${variant.size} for "${product.name}"`, 409);
+      throw new AppError(
+        `Only ${variant.stock} left in size ${variant.size} for "${product.name}"`,
+        409,
+      );
     }
     const updated = await productRepository.adjustVariantStock(productId, variantId, -quantity);
     if (!updated) throw new AppError(`Insufficient stock for "${product.name}"`, 409);

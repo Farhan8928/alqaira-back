@@ -5,7 +5,11 @@ import {
   flexDateSchema,
   emailSchema,
 } from "../../utils/validationPrimitives.js";
-import { makeSchema, idParamSchema, buildListQuery } from "../../utils/resourceValidationHelpers.js";
+import {
+  makeSchema,
+  idParamSchema,
+  buildListQuery,
+} from "../../utils/resourceValidationHelpers.js";
 
 const ORDER_STATUSES = ["pending", "confirmed", "processing", "shipped", "delivered", "cancelled"];
 
@@ -66,10 +70,4 @@ const orderTrackSchema = makeSchema({
   params: z.object({ orderNumber: z.string().trim().min(1) }),
 });
 
-export {
-  orderCreateSchema,
-  orderListSchema,
-  orderIdSchema,
-  orderStatusSchema,
-  orderTrackSchema,
-};
+export { orderCreateSchema, orderListSchema, orderIdSchema, orderStatusSchema, orderTrackSchema };
