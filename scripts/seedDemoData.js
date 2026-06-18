@@ -79,14 +79,60 @@ const CATEGORIES = [
     displayOrder: 1,
     description: "Elegant, breathable burkhas and abayas crafted from premium fabric.",
   },
-  // Kids
+  // Kids — same regional styles as men, tailored for little ones
   {
-    name: "Kids Kurta & Jubba",
-    slug: "kids-kurta-jubba",
+    name: "Kids Saudi Style Jubba",
+    slug: "kids-saudi-jubba",
     section: "kids",
     isFeatured: true,
     displayOrder: 1,
-    description: "Festive kurtas and jubbas for little ones.",
+    description: "Classic Saudi thobe silhouette with a crisp collar — sized for little ones.",
+  },
+  {
+    name: "Kids Omani Style Jubba",
+    slug: "kids-omani-jubba",
+    section: "kids",
+    isFeatured: true,
+    displayOrder: 2,
+    description: "Collarless Omani dishdasha with the signature tassel (furakha), in kids' sizes.",
+  },
+  {
+    name: "Kids Emirati Style Jubba",
+    slug: "kids-emirati-jubba",
+    section: "kids",
+    isFeatured: true,
+    displayOrder: 3,
+    description: "Refined Emirati kandura with minimal detailing, tailored for children.",
+  },
+  {
+    name: "Kids Moroccan / Kaftan Style Jubba",
+    slug: "kids-moroccan-kaftan-jubba",
+    section: "kids",
+    isFeatured: true,
+    displayOrder: 4,
+    description: "Flowing Moroccan kaftan cut with ornate trims, made for little ones.",
+  },
+  {
+    name: "Kids Designer / Modern Style Jubba",
+    slug: "kids-designer-modern-jubba",
+    section: "kids",
+    isFeatured: true,
+    displayOrder: 5,
+    description: "Contemporary tailored jubbas for the modern young gentleman.",
+  },
+  {
+    name: "Kids Straight Cut Kurta Pajama",
+    slug: "kids-straight-cut-kurta-pajama",
+    section: "kids",
+    displayOrder: 6,
+    description: "Timeless straight-cut kurta with matching pajama, in kids' sizes.",
+  },
+  {
+    name: "Kids Pathani Kurta Pajama",
+    slug: "kids-pathani-kurta-pajama",
+    section: "kids",
+    displayOrder: 7,
+    description: "Rugged Pathani suit with a structured collar and side pockets, for children.",
   },
 ];
 
@@ -129,7 +175,13 @@ const PRODUCTS_BY_CATEGORY = {
   "straight-cut-kurta-pajama": ["Ivory Straight Kurta Set", "Cotton Comfort Kurta Set"],
   "pathani-kurta-pajama": ["Khyber Pathani Suit", "Frontier Pathani Set"],
   burkha: ["Layla Flared Abaya", "Noor Premium Burkha", "Dana Embroidered Abaya"],
-  "kids-kurta-jubba": ["Little Prince Jubba", "Junior Festive Kurta"],
+  "kids-saudi-jubba": ["Little Najdi Thobe", "Junior Riyadh Thobe"],
+  "kids-omani-jubba": ["Little Muscat Dishdasha"],
+  "kids-emirati-jubba": ["Junior Dubai Kandura"],
+  "kids-moroccan-kaftan-jubba": ["Little Marrakech Kaftan"],
+  "kids-designer-modern-jubba": ["Junior Noir Jubba"],
+  "kids-straight-cut-kurta-pajama": ["Little Ivory Kurta Set"],
+  "kids-pathani-kurta-pajama": ["Junior Khyber Pathani Set"],
 };
 
 async function run() {
@@ -177,8 +229,8 @@ async function run() {
       await ProductModel.create({
         name,
         slug: productSlug,
-        shortDescription: `${name} — ${cat.name} crafted in premium fabric.`,
-        description: `${name} from ALQAIRA's ${cat.name} collection. ${cat.description} Tailored from ${FABRICS[i % FABRICS.length]} for an elegant drape and all-day comfort. Subtle detailing along the placket and cuffs delivers refined simplicity with timeless presence.`,
+        shortDescription: `${name} — ${cat.name} made from premium fabric.`,
+        description: `${name} from ALQAIRA's ${cat.name} collection. ${cat.description} Made from ${FABRICS[i % FABRICS.length]} for a comfortable, all-day fit. Clean stitching and a neat finish — simple, stylish clothing made to last.`,
         category: cat._id,
         categoryName: cat.name,
         section: cat.section,
