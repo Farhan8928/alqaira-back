@@ -3,7 +3,7 @@
  * @description Storefront catalog taxonomy. Every category belongs to a top-level
  * `section` (men | women | kids). For ALQAIRA the men's section holds the jubba
  * & kurta styles (Saudi, Omani, Emirati, Moroccan/Kaftan, Designer, Straight-cut,
- * Pathani), women's holds Burkha, etc. Soft-deleted via isActive.
+ * Pathani), women's holds Abaya, etc. Soft-deleted via isActive.
  */
 import mongoose from "mongoose";
 
