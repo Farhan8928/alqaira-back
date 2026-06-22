@@ -15,162 +15,95 @@ import { CategoryModel } from "../src/modules/category/category.model.js";
 import { ProductModel } from "../src/modules/product/product.model.js";
 import { SettingsModel } from "../src/modules/settings/settings.model.js";
 
+// Main categories per section (no sub-categories). `imgKey` picks the category
+// card image from /products/ai. Regional thobe styles live as products inside
+// "Thobe & Jubbas".
 const CATEGORIES = [
-  // Men — jubba & kurta styles
+  // Men
   {
-    name: "Saudi Style Jubba",
-    slug: "saudi-style-jubba",
+    name: "Thobe & Jubbas",
+    slug: "thobe-jubba",
     section: "men",
     isFeatured: true,
     displayOrder: 1,
-    description: "Classic Saudi thobe silhouette with a crisp collar and clean placket.",
+    imgKey: "saudi",
+    description: "Premium thobes and jubbas — Saudi, Omani, Emirati, Moroccan and designer styles.",
   },
   {
-    name: "Omani Style Jubba",
-    slug: "omani-style-jubba",
+    name: "Pathani Suit",
+    slug: "pathani-suit",
     section: "men",
     isFeatured: true,
     displayOrder: 2,
-    description: "Collarless Omani dishdasha with the signature tassel (furakha).",
+    imgKey: "pathani",
+    description: "Rugged Pathani suits with a structured collar and side pockets.",
   },
   {
-    name: "Emirati Style Jubba",
-    slug: "emirati-style-jubba",
+    name: "Kurta Pajama",
+    slug: "kurta-pajama",
     section: "men",
     isFeatured: true,
     displayOrder: 3,
-    description: "Refined Emirati kandura with a front pocket and minimal detailing.",
-  },
-  {
-    name: "Moroccan / Kaftan Style Jubba",
-    slug: "moroccan-kaftan-jubba",
-    section: "men",
-    isFeatured: true,
-    displayOrder: 4,
-    description: "Flowing Moroccan kaftan cut with ornate trims.",
-  },
-  {
-    name: "Designer / Modern Style Jubba",
-    slug: "designer-modern-jubba",
-    section: "men",
-    isFeatured: true,
-    displayOrder: 5,
-    description: "Contemporary tailored jubbas for the modern gentleman.",
-  },
-  {
-    name: "Straight Cut Kurta Pajama",
-    slug: "straight-cut-kurta-pajama",
-    section: "men",
-    displayOrder: 6,
+    imgKey: "straight",
     description: "Timeless straight-cut kurta with matching pajama.",
   },
   {
-    name: "Pathani Kurta Pajama",
-    slug: "pathani-kurta-pajama",
+    name: "Jacket",
+    slug: "jacket",
     section: "men",
-    displayOrder: 7,
-    description: "Rugged Pathani suit with a structured collar and side pockets.",
+    displayOrder: 4,
+    imgKey: "jacket",
+    description: "Ethnic jackets and bandhgalas to layer over a kurta or thobe.",
   },
   // Women
   {
-    name: "Abaya",
+    name: "Abayas",
     slug: "abaya",
     section: "women",
     isFeatured: true,
     displayOrder: 1,
+    imgKey: "women",
     description: "Elegant, breathable abayas made from premium fabric.",
   },
-  // Kids — same regional styles as men, tailored for little ones
+  // Kids & Boys
   {
-    name: "Kids Saudi Style Jubba",
-    slug: "kids-saudi-jubba",
+    name: "Thobe & Jubbas",
+    slug: "kids-thobe-jubba",
     section: "kids",
     isFeatured: true,
     displayOrder: 1,
-    description: "Classic Saudi thobe silhouette with a crisp collar — sized for little ones.",
+    imgKey: "kids-saudi",
+    description: "Premium thobes and jubbas for boys, in kids' sizes.",
   },
   {
-    name: "Kids Omani Style Jubba",
-    slug: "kids-omani-jubba",
+    name: "Pathani Suit",
+    slug: "kids-pathani-suit",
     section: "kids",
     isFeatured: true,
     displayOrder: 2,
-    description: "Collarless Omani dishdasha with the signature tassel (furakha), in kids' sizes.",
+    imgKey: "kids-pathani",
+    description: "Pathani suits for boys with a structured collar and side pockets.",
   },
   {
-    name: "Kids Emirati Style Jubba",
-    slug: "kids-emirati-jubba",
+    name: "Kurta Pajama",
+    slug: "kids-kurta-pajama",
     section: "kids",
     isFeatured: true,
     displayOrder: 3,
-    description: "Refined Emirati kandura with minimal detailing, tailored for children.",
-  },
-  {
-    name: "Kids Moroccan / Kaftan Style Jubba",
-    slug: "kids-moroccan-kaftan-jubba",
-    section: "kids",
-    isFeatured: true,
-    displayOrder: 4,
-    description: "Flowing Moroccan kaftan cut with ornate trims, made for little ones.",
-  },
-  {
-    name: "Kids Designer / Modern Style Jubba",
-    slug: "kids-designer-modern-jubba",
-    section: "kids",
-    isFeatured: true,
-    displayOrder: 5,
-    description: "Contemporary tailored jubbas for the modern young gentleman.",
-  },
-  {
-    name: "Kids Straight Cut Kurta Pajama",
-    slug: "kids-straight-cut-kurta-pajama",
-    section: "kids",
-    displayOrder: 6,
-    description: "Timeless straight-cut kurta with matching pajama, in kids' sizes.",
-  },
-  {
-    name: "Kids Pathani Kurta Pajama",
-    slug: "kids-pathani-kurta-pajama",
-    section: "kids",
-    displayOrder: 7,
-    description: "Rugged Pathani suit with a structured collar and side pockets, for children.",
+    imgKey: "kids-straight",
+    description: "Straight-cut kurta with matching pajama, in boys' sizes.",
   },
 ];
 
-const SIZES_MEN = ["S", "M", "L", "XL", "XXL"];
-const SIZES_WOMEN = ["S", "M", "L", "XL"];
+const SIZES_MEN = ["S", "M", "L", "XL", "2XL", "3XL"];
+const SIZES_WOMEN = ["S", "M", "L", "XL", "2XL"];
 const SIZES_KIDS = ["2-3Y", "4-5Y", "6-7Y", "8-9Y"];
 
 const FABRICS = ["Premium Japan Fabric", "Soft Cotton Blend", "Light Linen", "Nida Crepe"];
 const COLORS = ["Off White", "Beige", "Sand", "Navy", "Charcoal", "Olive"];
 
-/** Maps a category slug to its AI image set under /products/ai/<key>-N.jpg.
- * Generated (watermarked, faceless mannequin) by scripts/generate_catalog.py. */
-const AI_KEY_BY_SLUG = {
-  "saudi-style-jubba": "saudi",
-  "omani-style-jubba": "omani",
-  "emirati-style-jubba": "emirati",
-  "moroccan-kaftan-jubba": "moroccan",
-  "designer-modern-jubba": "designer",
-  "straight-cut-kurta-pajama": "straight",
-  "pathani-kurta-pajama": "pathani",
-  abaya: "women",
-  // Kids — each style has its own child-size image set
-  "kids-saudi-jubba": "kids-saudi",
-  "kids-omani-jubba": "kids-omani",
-  "kids-emirati-jubba": "kids-emirati",
-  "kids-moroccan-kaftan-jubba": "kids-moroccan",
-  "kids-designer-modern-jubba": "kids-designer",
-  "kids-straight-cut-kurta-pajama": "kids-straight",
-  "kids-pathani-kurta-pajama": "kids-pathani",
-};
-
-function aiKey(slug, section) {
-  if (section === "women") return "women";
-  return AI_KEY_BY_SLUG[slug] || (section === "kids" ? "kids-saudi" : "saudi");
-}
-
-/** /products/ai/<key>-<n>.jpg (n = 1..3). */
+/** /products/ai/<key>-<n>.jpg (n = 1..3) — watermarked, faceless-mannequin
+ * images generated by scripts/generate_catalog.py. */
 function aiImg(key, n) {
   return `/products/ai/${key}-${n}.jpg`;
 }
@@ -183,23 +116,48 @@ function makeVariants(sizes, base) {
   }));
 }
 
-// title templates per category slug
+// Products per category — each picks its own image set (img → /products/ai/<img>).
 const PRODUCTS_BY_CATEGORY = {
-  "saudi-style-jubba": ["Riyadh Classic Thobe", "Najdi Premium Thobe", "Royal Saudi Jubba"],
-  "omani-style-jubba": ["Muscat Dishdasha", "Nizwa Tassel Jubba"],
-  "emirati-style-jubba": ["Dubai Signature Kandura", "Abu Dhabi Pocket Kandura"],
-  "moroccan-kaftan-jubba": ["Marrakech Kaftan", "Fez Embroidered Jubba"],
-  "designer-modern-jubba": ["Noir Tailored Jubba", "Onyx Modern Thobe", "Aristo Designer Jubba"],
-  "straight-cut-kurta-pajama": ["Ivory Straight Kurta Set", "Cotton Comfort Kurta Set"],
-  "pathani-kurta-pajama": ["Khyber Pathani Suit", "Frontier Pathani Set"],
-  abaya: ["Layla Flared Abaya", "Noor Premium Abaya", "Dana Embroidered Abaya"],
-  "kids-saudi-jubba": ["Little Najdi Thobe", "Junior Riyadh Thobe"],
-  "kids-omani-jubba": ["Little Muscat Dishdasha"],
-  "kids-emirati-jubba": ["Junior Dubai Kandura"],
-  "kids-moroccan-kaftan-jubba": ["Little Marrakech Kaftan"],
-  "kids-designer-modern-jubba": ["Junior Noir Jubba"],
-  "kids-straight-cut-kurta-pajama": ["Little Ivory Kurta Set"],
-  "kids-pathani-kurta-pajama": ["Junior Khyber Pathani Set"],
+  "thobe-jubba": [
+    { name: "Riyadh Classic Thobe", img: "saudi" },
+    { name: "Najdi Premium Thobe", img: "saudi" },
+    { name: "Royal Saudi Jubba", img: "saudi" },
+    { name: "Muscat Dishdasha", img: "omani" },
+    { name: "Nizwa Tassel Jubba", img: "omani" },
+    { name: "Dubai Signature Kandura", img: "emirati" },
+    { name: "Abu Dhabi Pocket Kandura", img: "emirati" },
+    { name: "Marrakech Kaftan", img: "moroccan" },
+    { name: "Fez Embroidered Jubba", img: "moroccan" },
+    { name: "Noir Tailored Jubba", img: "designer" },
+    { name: "Onyx Modern Thobe", img: "designer" },
+  ],
+  "pathani-suit": [
+    { name: "Khyber Pathani Suit", img: "pathani" },
+    { name: "Frontier Pathani Set", img: "pathani" },
+  ],
+  "kurta-pajama": [
+    { name: "Ivory Straight Kurta Set", img: "straight" },
+    { name: "Cotton Comfort Kurta Set", img: "straight" },
+  ],
+  jacket: [
+    { name: "Classic Nehru Jacket", img: "jacket" },
+    { name: "Royal Bandhgala Jacket", img: "jacket" },
+  ],
+  abaya: [
+    { name: "Layla Flared Abaya", img: "women" },
+    { name: "Noor Premium Abaya", img: "women" },
+    { name: "Dana Embroidered Abaya", img: "women" },
+  ],
+  "kids-thobe-jubba": [
+    { name: "Little Najdi Thobe", img: "kids-saudi" },
+    { name: "Junior Riyadh Thobe", img: "kids-saudi" },
+    { name: "Little Muscat Dishdasha", img: "kids-omani" },
+    { name: "Junior Dubai Kandura", img: "kids-emirati" },
+    { name: "Little Marrakech Kaftan", img: "kids-moroccan" },
+    { name: "Junior Noir Jubba", img: "kids-designer" },
+  ],
+  "kids-pathani-suit": [{ name: "Junior Khyber Pathani Set", img: "kids-pathani" }],
+  "kids-kurta-pajama": [{ name: "Little Ivory Kurta Set", img: "kids-straight" }],
 };
 
 async function run() {
@@ -209,12 +167,15 @@ async function run() {
 
   // Migration: "Burkha" was renamed to "Abaya" — remove the old category and
   // the one product whose slug still carried the old name.
-  const oldBurkha = await CategoryModel.findOneAndDelete({ slug: "burkha" });
-  if (oldBurkha) {
-    await ProductModel.deleteMany({ category: oldBurkha._id });
-    console.log("[CLEAN] Removed old Burkha category + its products");
+  // Cleanup: remove any old categories (and their products) that are no longer
+  // part of the current structure — e.g. the old per-region jubba categories.
+  const keepSlugs = CATEGORIES.map((c) => c.slug);
+  const stale = await CategoryModel.find({ slug: { $nin: keepSlugs } });
+  for (const s of stale) {
+    await ProductModel.deleteMany({ category: s._id });
+    await CategoryModel.deleteOne({ _id: s._id });
   }
-  await ProductModel.deleteOne({ slug: "noor-premium-burkha" });
+  if (stale.length) console.log(`[CLEAN] Removed ${stale.length} old categories + their products`);
 
   // Ensure settings exist
   const settingsExists = await SettingsModel.findOne();
@@ -226,37 +187,39 @@ async function run() {
   // Upsert categories
   const catBySlug = {};
   for (const c of CATEGORIES) {
+    const { imgKey, ...catDoc } = c;
     const cat = await CategoryModel.findOneAndUpdate(
       { slug: c.slug },
-      { $set: { ...c, image: aiImg(aiKey(c.slug, c.section), 1), isActive: true } },
+      { $set: { ...catDoc, image: aiImg(imgKey, 1), isActive: true } },
       { new: true, upsert: true },
     );
     catBySlug[c.slug] = cat;
-    console.log(`[OK]   Category: ${c.name}`);
+    console.log(`[OK]   Category: ${c.name} (${c.section})`);
   }
 
   // Products
   let created = 0;
-  for (const [slug, names] of Object.entries(PRODUCTS_BY_CATEGORY)) {
+  for (const [slug, items] of Object.entries(PRODUCTS_BY_CATEGORY)) {
     const cat = catBySlug[slug];
     const sizes =
       cat.section === "women" ? SIZES_WOMEN : cat.section === "kids" ? SIZES_KIDS : SIZES_MEN;
-    for (let i = 0; i < names.length; i++) {
-      const name = names[i];
+    for (let i = 0; i < items.length; i++) {
+      const { name, img } = items[i];
       const productSlug = name
         .toLowerCase()
         .replace(/[^a-z0-9]+/g, "-")
         .replace(/(^-|-$)/g, "");
-      const images = [1, 2, 3].map((n) => aiImg(aiKey(cat.slug, cat.section), n));
+      const images = [1, 2, 3].map((n) => aiImg(img, n));
       const existing = await ProductModel.findOne({ slug: productSlug });
       if (existing) {
-        // Refresh images (and category link) on existing products so old/broken
-        // image paths get replaced with the current AI catalog images.
+        // Refresh images, category link AND size variants (S..3XL) on existing
+        // products so old image paths and old sizes (XXL) get updated.
         existing.images = images;
         existing.category = cat._id;
         existing.categoryName = cat.name;
+        existing.variants = makeVariants(sizes, 8 + i);
         await existing.save();
-        console.log(`[UPD]  Refreshed images: ${name}`);
+        console.log(`[UPD]  Refreshed: ${name}`);
         continue;
       }
       const price = 1499 + Math.floor(Math.random() * 30) * 100;
