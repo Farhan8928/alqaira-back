@@ -18,8 +18,15 @@ const settingsUpdateSchema = makeSchema({
     codEnabled: z.boolean().optional(),
     onlinePaymentEnabled: z.boolean().optional(),
     announcement: z.string().trim().optional(),
-    // Editable size charts: { [chartId]: Array<Record<string, string|number>> }
-    sizeChartRows: z.record(z.array(z.record(z.union([z.string(), z.number()])))).optional(),
+    // Editable size charts: { [chartId]: { columns: [{key,label}], rows: [{...}] } }
+    sizeCharts: z
+      .record(
+        z.object({
+          columns: z.array(z.object({ key: z.string(), label: z.string() })),
+          rows: z.array(z.record(z.union([z.string(), z.number()]))),
+        }),
+      )
+      .optional(),
   }),
 });
 
