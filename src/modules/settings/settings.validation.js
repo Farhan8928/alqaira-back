@@ -18,6 +18,8 @@ const settingsUpdateSchema = makeSchema({
     codEnabled: z.boolean().optional(),
     onlinePaymentEnabled: z.boolean().optional(),
     announcement: z.string().trim().optional(),
+    // Editable size charts: { [chartId]: Array<Record<string, string|number>> }
+    sizeChartRows: z.record(z.array(z.record(z.union([z.string(), z.number()])))).optional(),
   }),
 });
 

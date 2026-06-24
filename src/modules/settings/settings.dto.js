@@ -17,6 +17,7 @@ function toPublicSettingsDto(doc) {
     codEnabled: doc.codEnabled,
     onlinePaymentEnabled: doc.onlinePaymentEnabled,
     announcement: doc.announcement,
+    sizeChartRows: doc.sizeChartRows || {},
   };
 }
 

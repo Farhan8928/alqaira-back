@@ -27,6 +27,11 @@ const SettingsSchema = new mongoose.Schema(
 
     announcement: { type: String, trim: true },
 
+    // Editable size-chart rows, keyed by chart id (thobe | kurta | kids-thobe |
+    // kids-kurta). Each value is an array of row objects. When empty, the
+    // storefront falls back to the built-in default charts.
+    sizeChartRows: { type: mongoose.Schema.Types.Mixed, default: {} },
+
     // Running order number sequence — incremented atomically per order.
     orderSequence: { type: Number, default: 1000 },
   },
